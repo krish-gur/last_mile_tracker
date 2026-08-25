@@ -9,6 +9,7 @@ from database import engine, SessionLocal
 from notifications import send_status_notification
 
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import FileResponse
 
 # Auto-create tables in SQLite on startup
 models.Base.metadata.create_all(bind=engine)
@@ -101,7 +102,9 @@ def record_history(db: Session, order_id: int, status: str, user_id: int, notes:
     db.add(entry)
 
 # API Endpoints
-@app.get("/")
+@app.get("/", include_in_schema=False)
+def serve_dashboard():
+    return FileResponse("index.html")
 def read_root():
     return {
         "status": "online",
