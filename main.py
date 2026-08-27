@@ -105,12 +105,6 @@ def record_history(db: Session, order_id: int, status: str, user_id: int, notes:
 @app.get("/", include_in_schema=False)
 def serve_dashboard():
     return FileResponse("index.html")
-def read_root():
-    return {
-        "status": "online",
-        "docs_url": "http://127.0.0.1:8000/docs",
-        "message": "Last-Mile Delivery Tracker API is running"
-    }
 
 @app.post("/orders/estimate-rate")
 def estimate_rate(request: RateEstimateRequest, db: Session = Depends(get_db)):
